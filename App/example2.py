@@ -3,7 +3,7 @@
 import time
 import sys
 
-EMULATE_HX711=True
+EMULATE_HX711=False
 
 referenceUnit = -1
 
