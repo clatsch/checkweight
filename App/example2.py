@@ -3,14 +3,13 @@
 import time
 import sys
 
-EMULATE_HX711=False
+EMULATE_HX711=True
 
 referenceUnit = -1
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
     from hx711 import HX711
-    GPIO.setmode(GPIO.BCM)
 else:
     from emulated_hx711 import HX711
 
@@ -23,7 +22,7 @@ def cleanAndExit():
     print("Bye!")
     sys.exit()
 
-hx = HX711(6, 2)
+hx = HX711(25, 2)
 hx.set_reference_unit(referenceUnit)
 hx.reset()
 
