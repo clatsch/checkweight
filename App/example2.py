@@ -22,7 +22,7 @@ def cleanAndExit():
     print("Bye!")
     sys.exit()
 
-hx = HX711(25, 2)
+hx = HX711(6, 2)
 hx.set_reference_unit(referenceUnit)
 hx.reset()
 
