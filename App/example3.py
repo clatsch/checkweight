@@ -24,7 +24,7 @@ try:
 
     # In order to calculate the conversion ratio to some units, in my case I want grams,
     # you must have known weight.
-    input('Put known weight on the scale and then press Enter')
+    # input('Put known weight on the scale and then press Enter')
     reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
@@ -50,7 +50,7 @@ try:
     # subtracted by offset and converted by scale ratio to
     # desired units. In my case in grams.
     print("Now, I will read data in infinite loop. To exit press 'CTRL + C'")
-    input('Press Enter to begin reading')
+    # input('Press Enter to begin reading')
     print('Current weight on the scale in grams is: ')
     while True:
         print(hx.get_weight_mean(20), 'g')
