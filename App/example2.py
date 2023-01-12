@@ -10,6 +10,7 @@ referenceUnit = -1
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
     from hx711 import HX711
+    GPIO.setmode(GPIO.BCM)
 else:
     from emulated_hx711 import HX711
 
