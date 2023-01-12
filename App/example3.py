@@ -28,7 +28,7 @@ try:
     reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
-        known_weight_grams = 500
+        known_weight_grams = 200
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
