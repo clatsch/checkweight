@@ -24,7 +24,7 @@ Great explanation of strain gauges: https://www.allaboutcircuits.com/textbook/di
 
 The python class HX711 can be installed with the following command:
    
-   `pip3 install 'git+https://github.com/bytedisciple/HX711.git#egg=HX711&subdirectory=HX711_Python3'`
+   `sudo pip3 install 'git+https://github.com/bytedisciple/HX711.git#egg=HX711&subdirectory=HX711_Python3'`
    
 Once installed instantiate a HX711 object with the following:
 
