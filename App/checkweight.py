@@ -24,11 +24,12 @@ try:
 
     # In order to calculate the conversion ratio to some units, in my case I want grams,
     # you must have known weight.
-    # input('Put known weight on the scale and then press Enter')
+    input('Put known weight on the scale and then press Enter')
     reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
-        known_weight_grams = 200
+        known_weight_grams = input(
+            'Write how many grams it was and press Enter: ')
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
