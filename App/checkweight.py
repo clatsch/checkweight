@@ -106,15 +106,6 @@ try:
     print("Now, I will read data in infinite loop. To exit press 'CTRL + C'")
     # input('Press Enter to begin reading')
     print('Current weight on the scale in grams is: ')
-
-    def run():
-        client = connect_mqtt()
-        # client.loop_start()
-        publish(client)
-
-    if __name__ == '__main__':
-        run()
-
     while True:
         weight = hx.get_weight_mean(5)
         print(weight, ' g')
@@ -132,6 +123,17 @@ try:
                 #     print(f"Woooow, too much weight!!! `{topic}`")
                 # else:
                 #     print(f"Failed to send message to topic {topic}")
+
+
+            def run():
+                client = connect_mqtt()
+                # client.loop_start()
+                publish(connect_mqtt())
+
+
+            if __name__ == '__main__':
+                run()
+
 
 
 except (KeyboardInterrupt, SystemExit):
