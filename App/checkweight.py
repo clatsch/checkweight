@@ -5,7 +5,7 @@ import random
 import time
 from paho.mqtt import client as mqtt_client
 
-broker = 'broker.emqx.io'
+broker = 'licalhost'
 port = 1883
 topic = "python/checkweight"
 # generate client ID with pub prefix randomly
