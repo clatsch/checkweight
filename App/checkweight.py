@@ -95,7 +95,6 @@ try:
         # scale ratio. Without arguments 'channel' and 'gain_A' it sets
         # the ratio for current channel and gain.
         ratio = reading / value  # calculate the ratio for channel A and gain 128
-        print(ratio, reading, value)
         hx.set_scale_ratio(ratio)  # set ratio for current channel
         print('Ratio is set.')
     else:
@@ -109,7 +108,7 @@ try:
     print('Current weight on the scale in grams is: ')
     while True:
 
-        if hx.get_weight_mean(20) > 700:
+        if hx.get_weight_mean(50) > 700:
             print(hx.get_weight_mean(20), 'g')
             def publish(client):
 
