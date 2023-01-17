@@ -108,27 +108,30 @@ try:
     # input('Press Enter to begin reading')
     print('Current weight on the scale in grams is: ')
     while True:
-        print(hx.get_weight_mean(20), 'g')
-        def publish(client):
 
-            msg = f"messages: "
-            result = client.publish(topic, msg)
-            # result: [0, 1]
-            status = result[0]
-            if status == 0:
-                print(f"Send `{msg}` to topicoooooooo `{topic}`")
-            else:
-                print(f"Failed to send message to topic {topic}")
+        if hx.get_weight_mean(20) > 300:
+            print(hx.get_weight_mean(20), 'g')
+            def publish(client):
 
-
-        def run():
-            client = connect_mqtt()
-            # client.loop_start()
-            publish(client)
+                msg = f"messages: "
+                result = client.publish(topic, msg)
+                # result: [0, 1]
+                status = result[0]
+                if status == 0:
+                    # print(f"Send `{msg}` to topicoooooooo `{topic}`")
+                    print(f"Woooow, too much weight!!! `{topic}`")
+                else:
+                    print(f"Failed to send message to topic {topic}")
 
 
-        if __name__ == '__main__':
-            run()
+            def run():
+                client = connect_mqtt()
+                # client.loop_start()
+                publish(client)
+
+
+            if __name__ == '__main__':
+                run()
 
 
 
