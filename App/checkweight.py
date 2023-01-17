@@ -109,11 +109,11 @@ try:
     print('Current weight on the scale in grams is: ')
     while True:
 
-        if hx.get_weight_mean(20) > 300:
+        if hx.get_weight_mean(20) > 700:
             print(hx.get_weight_mean(20), 'g')
             def publish(client):
 
-                msg = f"messages: "
+                msg = f"Woooow, too much weight!!! `{topic}`"
                 result = client.publish(topic, msg)
                 # result: [0, 1]
                 status = result[0]
