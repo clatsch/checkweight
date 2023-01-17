@@ -107,20 +107,20 @@ try:
     # input('Press Enter to begin reading')
     print('Current weight on the scale in grams is: ')
     while True:
-
+        print(hx.get_weight_mean(20), 'g')
         if hx.get_weight_mean(50) > 700:
-            print(hx.get_weight_mean(20), 'g')
+            # print(hx.get_weight_mean(20), 'g')
             def publish(client):
 
                 msg = f"Woooow, too much weight!!! `{topic}`"
                 result = client.publish(topic, msg)
                 # result: [0, 1]
                 status = result[0]
-                if status == 0:
-                    # print(f"Send `{msg}` to topicoooooooo `{topic}`")
-                    print(f"Woooow, too much weight!!! `{topic}`")
-                else:
-                    print(f"Failed to send message to topic {topic}")
+                # if status == 0:
+                #     # print(f"Send `{msg}` to topicoooooooo `{topic}`")
+                #     print(f"Woooow, too much weight!!! `{topic}`")
+                # else:
+                #     print(f"Failed to send message to topic {topic}")
 
 
             def run():
