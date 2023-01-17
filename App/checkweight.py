@@ -107,7 +107,7 @@ try:
     # input('Press Enter to begin reading')
     print('Current weight on the scale in grams is: ')
     while True:
-        weight = hx.get_weight_mean(20)
+        weight = hx.get_weight_mean(1)
         print(weight, ' g')
         # print(hx.get_weight_mean(20), 'g')
         if weight > 700:
