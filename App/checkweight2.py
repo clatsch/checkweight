@@ -52,7 +52,7 @@ def publish_weight(client, weight):
 def subscribe(client: mqtt_client):
     client.subscribe(MQTT_TOPIC)
     def on_message(client, userdata, msg):
-        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
         if 'weight' in payload:
             global known_weight_grams
@@ -99,6 +99,8 @@ try:
         # Wait for known_weight_grams to be set before continuing
         while known_weight_grams is None:
             time.sleep(0.1)
+
+        mqtt_client.loop_stop()
 
         try:
             value = float(known_weight_grams)
