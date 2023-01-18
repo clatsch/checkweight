@@ -87,7 +87,7 @@ try:
     reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
-        known_weight_grams = reading
+        known_weight_grams = mqtt_client
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
@@ -105,7 +105,7 @@ try:
 
 
     while True:
-        subscribe(mqtt_client)
+        # subscribe(mqtt_client)
         mqtt_client.loop_start()
         weight = hx.get_weight_mean(20)
         maxWeight = 750
