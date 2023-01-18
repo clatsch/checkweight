@@ -9,7 +9,8 @@ from paho.mqtt import client as mqtt_client
 # load MQTT configurations from environment variables
 MQTT_BROKER = os.environ.get("MQTT_BROKER", 'localhost')
 MQTT_PORT = int(os.environ.get("MQTT_PORT", 1883))
-MQTT_TOPIC = os.environ.get("MQTT_TOPIC", "python/checkweight")
+MQTT_TOPIC_SETRATION = os.environ.get("MQTT_TOPIC", "python/checkweight/ratio")
+MQTT_TOPIC_WEIGHT = os.environ.get("MQTT_TOPIC", "python/checkweight/weight")
 
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
@@ -39,27 +40,36 @@ def publish_weight(client, weight):
     """
     if client:
         data = json.dumps({"weight": weight})
-        result = client.publish(MQTT_TOPIC, data)
+        result = client.publish(MQTT_TOPIC_SETRATION, data)
         # result: [0, 1]
         status = result[0]
         if status == 0:
-            print(f"Sent weight {weight} to topic {MQTT_TOPIC}")
+            print(f"Sent weight {weight} to topic {MQTT_TOPIC_SETRATION}")
         else:
-            print(f"Failed to send message to topic {MQTT_TOPIC}")
+            print(f"Failed to send message to topic {MQTT_TOPIC_SETRATION}")
     else:
         print("MQTT client not connected. Could not publish weight")
 
-def subscribe(client: mqtt_client):
-    client.subscribe(MQTT_TOPIC)
-    def on_message(client, userdata, msg):
-        # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-        payload = json.loads(msg.payload.decode())
-        if 'weight' in payload:
-            global known_weight_grams
-            known_weight_grams = payload['weight']
-            print("weight data", known_weight_grams)
-        else:
-            print("Invalid data")
+def subscribe(client: mqtt_client, topic):
+    client.subscribe(MQTT_TOPIC_SETRATION, topic)
+
+    if topic == MQTT_TOPIC_SETRATION:
+        def on_message(client, userdata, msg):
+            # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+            payload = json.loads(msg.payload.decode())
+            if 'weight' in payload:
+                global known_weight_grams
+                known_weight_grams = payload['weight']
+                print("weight data", known_weight_grams)
+            else:
+                print("Invalid data")
+
+    else:
+        def on_connect(client, userdata, flags, rc):
+            if rc == 0:
+                print("Connected to MQTT Broker!", weight)
+            else:
+                print("Failed to connect, return code %d\n", rc)
 
     client.on_message = on_message
 
@@ -94,7 +104,7 @@ try:
 
 
         mqtt_client.loop_start()
-        subscribe(mqtt_client)
+        subscribe(mqtt_client, MQTT_TOPIC_SETRATION)
 
         # Wait for known_weight_grams to be set before continuing
         while known_weight_grams is None:
@@ -119,7 +129,7 @@ try:
 
 
     while True:
-        subscribe(mqtt_client)
+        subscribe(mqtt_client, MQTT_TOPIC_WEIGHT)
         mqtt_client.loop_start()
         weight = hx.get_weight_mean(20)
         maxWeight = 750
