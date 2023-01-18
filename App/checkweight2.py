@@ -103,7 +103,7 @@ try:
         # # ...
 
         subscribe(mqtt_client)
-        mqtt_client.loop_forever()
+        mqtt_client.loop_start()
 
         # Wait for known_weight_grams to be set before continuing
         while known_weight_grams is None:
