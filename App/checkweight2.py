@@ -103,6 +103,8 @@ try:
 
 
     while True:
+        subscribe(mqtt_client)
+        mqtt_client.loop_start()
         weight = hx.get_weight_mean(20)
         maxWeight = 750
         if weight > maxWeight:
@@ -110,9 +112,6 @@ try:
             # connect to MQTT broker
             # publish the weight
             publish_weight(mqtt_client, weight)
-            subscribe(mqtt_client)
-            mqtt_client.loop_start()
-
         else:
             print("Invalid weight")
 
