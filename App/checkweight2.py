@@ -49,15 +49,15 @@ def publish_weight(client, weight):
     else:
         print("MQTT client not connected. Could not publish weight")
 
-# def subscribe(client: mqtt_client):
-#     def on_message(client, userdata, msg):
-#         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-#         payload = json.loads(msg.payload.decode())
-#         if 'weight' in payload:
-#             reading = payload['weight']
-#             print("weight data", reading)
-#         else:
-#             print("Invalid data")
+def subscribe(client: mqtt_client):
+    def on_message(client, userdata, msg):
+        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        payload = json.loads(msg.payload.decode())
+        if 'weight' in payload:
+            reading = payload['weight']
+            print("weight data", reading)
+        else:
+            print("Invalid data")
 
 
 
@@ -88,18 +88,18 @@ try:
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
         known_weight_grams = None
-        def subscribe(client: mqtt_client):
-            def on_message(client, userdata, msg):
-                print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-                payload = json.loads(msg.payload.decode())
-                if 'weight' in payload:
-                    global known_weight_grams
-                    known_weight_grams = payload['weight']
-                    print("weight data", known_weight_grams)
-                else:
-                    print("Invalid data")
 
-            # ...
+        # def on_message(client, userdata, msg):
+        #     print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        #     payload = json.loads(msg.payload.decode())
+        #     if 'weight' in payload:
+        #         global known_weight_grams
+        #         known_weight_grams = payload['weight']
+        #         print("weight data", known_weight_grams)
+        #     else:
+        #         print("Invalid data")
+        #
+        # # ...
 
         subscribe(mqtt_client)
         mqtt_client.loop_forever()
