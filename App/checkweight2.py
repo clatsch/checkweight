@@ -99,6 +99,8 @@ try:
             else:
                 print("Invalid data")
 
+        # ...
+
         subscribe(mqtt_client)
         mqtt_client.loop_start()
 
@@ -116,19 +118,8 @@ try:
         hx.set_scale_ratio(ratio)
         print('Ratio is set.')
 
-
-    #     try:
-    #         value = float(known_weight_grams)
-    #         print(value, 'grams')
-    #     except ValueError:
-    #         print('Expected integer or float and I have got:',
-    #               known_weight_grams)
-    #
-    #     ratio = reading / value
-    #     hx.set_scale_ratio(ratio)
-    #     print('Ratio is set.')
-    # else:
-    #     raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
+    else:
+        raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
 
     # -----------------------------
 
