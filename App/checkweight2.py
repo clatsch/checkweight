@@ -116,6 +116,7 @@ try:
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
+            maxWeight = float(maxWeight)
             mqtt_client.loop_stop()
         except ValueError:
             print('Expected integer or float and I have got:', known_weight_grams)
