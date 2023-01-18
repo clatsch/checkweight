@@ -49,6 +49,20 @@ def publish_weight(client, weight):
     else:
         print("MQTT client not connected. Could not publish weight")
 
+def publish_message(client, msg):
+    if client:
+        data = json.dumps(msg)
+        result = client.publish(MQTT_TOPIC, data)
+        # result: [0, 1]
+        status = result[0]
+        if status == 0:
+            print(f"Sent {msg} to topic {MQTT_TOPIC}")
+        else:
+            print(f"Failed to send message to topic {MQTT_TOPIC}")
+    else:
+        print("MQTT client not connected. Could not publish weight")
+
+
 def subscribe(client: mqtt_client):
     client.subscribe(MQTT_TOPIC)
     def on_message(client, userdata, msg):
@@ -66,8 +80,7 @@ def subscribe(client: mqtt_client):
 
         elif 'weight' in payload:
             global weight
-        else:
-            print("Invalid data")
+
 
     client.on_message = on_message
 
@@ -95,6 +108,7 @@ try:
         print('invalid data', reading)
 
     input('Put known weight on the scale and then press Enter')
+    publish_message(mqtt_client, 'Put known weight on the scale and then press Enter')
     reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
@@ -110,6 +124,7 @@ try:
             time.sleep(0.1)
 
         print('Enter maxWeight')
+        publish_message(mqtt_client, 'Enter max weight')
         while maxWeight is None:
             time.sleep(0.1)
 
@@ -124,6 +139,7 @@ try:
         ratio = reading / value
         hx.set_scale_ratio(ratio)
         print('Ratio is set.')
+        publish_message(mqtt_client, 'Ratio is set.')
 
     else:
         raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
