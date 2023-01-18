@@ -60,7 +60,8 @@ def subscribe(client: mqtt_client):
         else:
             print("Invalid data")
 
-        client.subscribe(MQTT_TOPIC)
+
+    client.subscribe(MQTT_TOPIC)
 
 
 
