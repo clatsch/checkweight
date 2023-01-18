@@ -60,14 +60,16 @@ try:
         print("Tare failed")
     # get the weight
     weight = hx.get_weight_mean(5)
-    if weight:
-        print(f"Weight: {weight}")
-        # connect to MQTT broker
-        mqtt_client = connect_mqtt()
-        # publish the weight
-        publish_weight(mqtt_client, weight)
-    else:
-        print("Invalid weight")
+    mqtt_client = connect_mqtt()
+
+    while True:
+        if weight:
+            print(f"Weight: {weight}")
+            # connect to MQTT broker
+            # publish the weight
+            publish_weight(mqtt_client, weight)
+        else:
+            print("Invalid weight")
 
 except (KeyboardInterrupt, SystemExit):
     print("Cleaning up")
