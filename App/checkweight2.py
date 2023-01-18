@@ -87,19 +87,48 @@ try:
     reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
-        known_weight_grams = mqtt_client.loop_start()
+        known_weight_grams = None
+
+        def on_message(client, userdata, msg):
+            print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+            payload = json.loads(msg.payload.decode())
+            if 'weight' in payload:
+                global known_weight_grams
+                known_weight_grams = payload['weight']
+                print("weight data", known_weight_grams)
+            else:
+                print("Invalid data")
+
+        subscribe(mqtt_client)
+        mqtt_client.loop_start()
+
+        # Wait for known_weight_grams to be set before continuing
+        while known_weight_grams is None:
+            time.sleep(0.1)
+
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
         except ValueError:
-            print('Expected integer or float and I have got:',
-                  known_weight_grams)
+            print('Expected integer or float and I have got:', known_weight_grams)
 
         ratio = reading / value
         hx.set_scale_ratio(ratio)
         print('Ratio is set.')
-    else:
-        raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
+
+
+    #     try:
+    #         value = float(known_weight_grams)
+    #         print(value, 'grams')
+    #     except ValueError:
+    #         print('Expected integer or float and I have got:',
+    #               known_weight_grams)
+    #
+    #     ratio = reading / value
+    #     hx.set_scale_ratio(ratio)
+    #     print('Ratio is set.')
+    # else:
+    #     raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
 
     # -----------------------------
 
