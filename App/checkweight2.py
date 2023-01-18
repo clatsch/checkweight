@@ -104,17 +104,22 @@ try:
 
     while True:
         weight = hx.get_weight_mean(20)
-        if weight:
+        maxWeight = 750
+        if weight > maxWeight:
             print(f"Weight: {weight}")
             # connect to MQTT broker
             # publish the weight
             publish_weight(mqtt_client, weight)
             subscribe(mqtt_client)
+            mqtt_client.loop_start()
+
         else:
             print("Invalid weight")
 
+
 except (KeyboardInterrupt, SystemExit):
     print("Cleaning up")
+    mqtt_client.loop_stop()
     hx.power_down()
     hx.power_up()
     GPIO.cleanup()
