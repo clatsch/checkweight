@@ -83,12 +83,11 @@ try:
     else:
         print('invalid data', reading)
 
-    # input('Put known weight on the scale and then press Enter')
-    # reading = hx.get_data_mean()
+    input('Put known weight on the scale and then press Enter')
+    reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
-        known_weight_grams = input(
-            'Write how many grams it was and press Enter: ')
+        known_weight_grams = reading
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
