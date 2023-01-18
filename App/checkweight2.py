@@ -50,6 +50,7 @@ def publish_weight(client, weight):
         print("MQTT client not connected. Could not publish weight")
 
 def subscribe(client: mqtt_client):
+    print('subscribed started')
     def on_message(client, userdata, msg):
         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
@@ -108,7 +109,6 @@ try:
         # Wait for known_weight_grams to be set before continuing
         while known_weight_grams is None:
             time.sleep(0.1)
-            print('waiting for value')
 
         try:
             value = float(known_weight_grams)
@@ -127,7 +127,7 @@ try:
 
 
     while True:
-        # subscribe(mqtt_client)
+        subscribe(mqtt_client)
         mqtt_client.loop_start()
         weight = hx.get_weight_mean(20)
         maxWeight = 750
