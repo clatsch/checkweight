@@ -52,9 +52,12 @@ def publish_weight(client, weight):
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-
-    client.subscribe(MQTT_TOPIC)
-    client.on_message = on_message
+        payload = json.loads(msg.payload.decode())
+        if 'weight' in payload:
+            reading = payload['weight']
+            print("weight data", reading)
+        else:
+            print("Invalid data")
 
 
 
@@ -80,8 +83,8 @@ try:
     else:
         print('invalid data', reading)
 
-    input('Put known weight on the scale and then press Enter')
-    reading = hx.get_data_mean()
+    # input('Put known weight on the scale and then press Enter')
+    # reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
         known_weight_grams = input(
