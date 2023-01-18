@@ -58,6 +58,12 @@ def subscribe(client: mqtt_client):
             global known_weight_grams
             known_weight_grams = payload['knownWeight']
             print("knownWeight", known_weight_grams)
+
+        if 'maxWeight' in payload:
+            global maxWeight
+            maxWeight = payload['maxWeight']
+            print("maxWeight", maxWeight)
+
         elif 'weight' in payload:
             global weight
         else:
@@ -93,6 +99,7 @@ try:
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
         known_weight_grams = None
+        maxWeight = None
 
 
         mqtt_client.loop_start()
@@ -102,13 +109,14 @@ try:
         while known_weight_grams is None:
             time.sleep(0.1)
 
-
+        print('Enter maxWeight')
+        while maxWeight is None:
+            time.sleep(0.1)
 
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
             mqtt_client.loop_stop()
-            print('------------loop stopped-------------')
         except ValueError:
             print('Expected integer or float and I have got:', known_weight_grams)
 
@@ -124,7 +132,7 @@ try:
         # subscribe(mqtt_client)
         mqtt_client.loop_start()
         weight = hx.get_weight_mean(20)
-        maxWeight = 750
+
         if weight > maxWeight:
             print(f"Weight: {weight}")
             # connect to MQTT broker
