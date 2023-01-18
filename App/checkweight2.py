@@ -109,6 +109,7 @@ try:
             # connect to MQTT broker
             # publish the weight
             publish_weight(mqtt_client, weight)
+            subscribe(mqtt_client)
         else:
             print("Invalid weight")
 
