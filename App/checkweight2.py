@@ -84,7 +84,7 @@ try:
         print('Data subtracted by offset but still not converted to units:',
               reading)
     else:
-        print(reading)
+        print('invalid data', reading)
 
     input('Put known weight on the scale and then press Enter')
     reading = hx.get_data_mean()
@@ -106,6 +106,7 @@ try:
             value = float(known_weight_grams)
             print(value, 'grams')
             mqtt_client.loop_stop()
+            print('------------loop stopped-------------')
         except ValueError:
             print('Expected integer or float and I have got:', known_weight_grams)
 
