@@ -84,7 +84,7 @@ try:
         print('Data subtracted by offset but still not converted to units:',
               reading)
     else:
-        print('invalid data', reading)
+        print(reading)
 
     input('Put known weight on the scale and then press Enter')
     reading = hx.get_data_mean()
