@@ -148,7 +148,7 @@ try:
     while True:
         # subscribe(mqtt_client)
         mqtt_client.loop_start()
-        weight = hx.get_weight_mean(20)
+        weight = hx.get_weight_mean(1)
 
         if weight > maxWeight:
             print(f"Weight: {weight}")
