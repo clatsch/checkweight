@@ -58,6 +58,8 @@ def subscribe(client: mqtt_client):
             global known_weight_grams
             known_weight_grams = payload['knownWeight']
             print("knownWeight", known_weight_grams)
+        elif 'weight' in payload:
+            global weight
         else:
             print("Invalid data")
 
