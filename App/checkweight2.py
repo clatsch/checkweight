@@ -115,8 +115,6 @@ try:
     else:
         raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
 
-    # -----------------------------
-
 
     while True:
         # subscribe(mqtt_client)
