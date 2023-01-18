@@ -50,6 +50,7 @@ def publish_weight(client, weight):
         print("MQTT client not connected. Could not publish weight")
 
 def subscribe(client: mqtt_client):
+    client.subscribe(MQTT_TOPIC)
     def on_message(client, userdata, msg):
         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
@@ -61,7 +62,6 @@ def subscribe(client: mqtt_client):
             print("Invalid data")
 
 
-    client.subscribe(MQTT_TOPIC)
 
 
 
@@ -106,7 +106,7 @@ try:
         # # ...
 
         subscribe(mqtt_client)
-        mqtt_client.loop_forever()
+        mqtt_client.loop_start()
 
         # Wait for known_weight_grams to be set before continuing
         while known_weight_grams is None:
