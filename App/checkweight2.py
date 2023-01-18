@@ -100,11 +100,12 @@ try:
         while known_weight_grams is None:
             time.sleep(0.1)
 
-        mqtt_client.loop_stop()
+
 
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
+            mqtt_client.loop_stop()
         except ValueError:
             print('Expected integer or float and I have got:', known_weight_grams)
 
