@@ -49,6 +49,15 @@ def publish_weight(client, weight):
     else:
         print("MQTT client not connected. Could not publish weight")
 
+def subscribe(client: mqtt_client):
+    def on_message(client, userdata, msg):
+        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+
+    client.subscribe(MQTT_TOPIC)
+    client.on_message = on_message
+
+
+
 try:
     # set up GPIO
     GPIO.setmode(GPIO.BCM)
@@ -71,8 +80,6 @@ try:
     else:
         print('invalid data', reading)
 
-    # In order to calculate the conversion ratio to some units, in my case I want grams,
-    # you must have known weight.
     input('Put known weight on the scale and then press Enter')
     reading = hx.get_data_mean()
     if reading:
@@ -86,17 +93,11 @@ try:
             print('Expected integer or float and I have got:',
                   known_weight_grams)
 
-        # set scale ratio for particular channel and gain which is
-        # used to calculate the conversion to units. Required argument is only
-        # scale ratio. Without arguments 'channel' and 'gain_A' it sets
-        # the ratio for current channel and gain.
-        ratio = reading / value  # calculate the ratio for channel A and gain 128
-        hx.set_scale_ratio(ratio)  # set ratio for current channel
+        ratio = reading / value
+        hx.set_scale_ratio(ratio)
         print('Ratio is set.')
     else:
         raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
-
-
 
     # -----------------------------
 
