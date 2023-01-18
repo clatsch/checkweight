@@ -108,6 +108,7 @@ try:
         # Wait for known_weight_grams to be set before continuing
         while known_weight_grams is None:
             time.sleep(0.1)
+            print('waiting for value')
 
         try:
             value = float(known_weight_grams)
