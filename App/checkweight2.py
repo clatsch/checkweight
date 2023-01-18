@@ -130,8 +130,8 @@ try:
             # connect to MQTT broker
             # publish the weight
             publish_weight(mqtt_client, weight)
-        else:
-            print("Invalid weight")
+        # else:
+        #     print("Invalid weight")
 
 
 except (KeyboardInterrupt, SystemExit):
