@@ -109,7 +109,7 @@ try:
         print('invalid data', reading)
 
     publish_message(mqtt_client, 'Put known weight on the scale and then press Enter')
-    input('Put known weight on the scale and then press Enter')
+    # input('Put known weight on the scale and then press Enter')
     reading = hx.get_data_mean()
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
