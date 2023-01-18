@@ -61,8 +61,7 @@ def subscribe(client: mqtt_client):
         else:
             print("Invalid data")
 
-
-
+    client.on_message = on_message
 
 
 try:
@@ -93,20 +92,9 @@ try:
         print('Mean value from HX711 subtracted by offset:', reading)
         known_weight_grams = None
 
-        # def on_message(client, userdata, msg):
-        #     print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-        #     payload = json.loads(msg.payload.decode())
-        #     if 'weight' in payload:
-        #         global known_weight_grams
-        #         known_weight_grams = payload['weight']
-        #         print("weight data", known_weight_grams)
-        #     else:
-        #         print("Invalid data")
-        #
-        # # ...
 
-        subscribe(mqtt_client)
         mqtt_client.loop_start()
+        subscribe(mqtt_client)
 
         # Wait for known_weight_grams to be set before continuing
         while known_weight_grams is None:
