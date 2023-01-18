@@ -107,7 +107,7 @@ try:
     else:
         print('invalid data', reading)
 
-    input('Put known weight on the scale and then press Enter')
+    # input('Put known weight on the scale and then press Enter')
     publish_message(mqtt_client, 'Put known weight on the scale and then press Enter')
     reading = hx.get_data_mean()
     if reading:
@@ -123,7 +123,7 @@ try:
         while known_weight_grams is None:
             time.sleep(0.1)
 
-        print('Enter maxWeight')
+        # print('Enter maxWeight')
         publish_message(mqtt_client, 'Enter max weight')
         while maxWeight is None:
             time.sleep(0.1)
