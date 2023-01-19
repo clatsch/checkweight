@@ -10,7 +10,7 @@ from paho.mqtt import client as mqtt_client
 # load MQTT configurations from environment variables
 MQTT_BROKER = os.environ.get("MQTT_BROKER", 'localhost')
 MQTT_PORT = int(os.environ.get("MQTT_PORT", 1883))
-MQTT_TOPIC = os.environ.get("MQTT_TOPIC", "python/checkweight")
+MQTT_TOPIC = os.environ.get("MQTT_TOPIC", "checkweight")
 
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 1000)}'

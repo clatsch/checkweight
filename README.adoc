@@ -14,10 +14,19 @@ image::images/raspberry pi os[]
 
 image::images/Skizze_Steckplatine.png[]
 
-== Checkweight Software
+== Checkweight Software installieren
+
+In dieser Anleitung wird der Raspberry via SSH gesteuert, darum sollte diese Option aktiviert sein.
+
+Als allererstes muss der Code vom Python-Skript von Github geklont werden. Hierzu folgendes Befehl verwenden
+....
+sudo git clone https://github.com/clatsch/checkweight
+....
+
+Installation Node Red
 
 ....
-git clone https://github.com/clatsch/checkweight
+bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
 ....
 
 
