@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 from hx711 import HX711
 import random
 import time
+from time import sleep
 import json
 import os
 from paho.mqtt import client as mqtt_client
@@ -90,6 +91,8 @@ try:
     # set up GPIO
     GPIO.setmode(GPIO.BCM)
     hx = HX711(dout_pin=6, pd_sck_pin=5)
+    buzzer = 23
+    GPIO.setup(buzzer,GPIO.OUT)
     # tare the scale
     if not hx.zero():
         print("Tare successful")
@@ -160,6 +163,11 @@ try:
         else:
             print(weightRounded)
         if weightRounded > maxWeight:
+            GPIO.output(buzzer,GPIO.HIGH)
+            print ("Beep")
+            sleep(0.5) # Delay in seconds
+            GPIO.output(buzzer,GPIO.LOW)
+
             publish_weight(mqtt_client, weight)
         # else:
         #     print("Invalid weight")
