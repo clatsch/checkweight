@@ -158,7 +158,7 @@ try:
             weightRounded =0
         else:
             print(weightRounded)
-        if weight > maxWeight:
+        if weightRounded > maxWeight:
             publish_weight(mqtt_client, weight)
         # else:
         #     print("Invalid weight")
