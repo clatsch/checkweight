@@ -39,7 +39,7 @@ def publish_weight(client, weight):
     """
     if client:
         data = json.dumps({"weight": weight})
-        client.publish_weight(MQTT_TOPIC, data)
+        client.publish(MQTT_TOPIC, data)
         # result: [0, 1]
         # status = result[0]
         # if status == 0:
@@ -52,7 +52,7 @@ def publish_weight(client, weight):
 def publish_message(client, msg):
     if client:
         data = json.dumps(msg)
-        client.publish_message(MQTT_TOPIC, data)
+        client.publish(MQTT_TOPIC, data)
         # result: [0, 1]
         # status = result[0]
         # if status == 0:
