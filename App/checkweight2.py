@@ -161,6 +161,8 @@ try:
 
 except (KeyboardInterrupt, SystemExit):
     print("Cleaning up")
+    known_weight_grams = None
+    maxWeight = None
     mqtt_client.loop_stop()
     hx.power_down()
     hx.power_up()
