@@ -163,7 +163,9 @@ try:
             print(weightRounded)
         else:
             print(weightRounded)
+
         if weightRounded > maxWeight:
+            print(weightRounded)
             GPIO.output(buzzer,GPIO.HIGH)
             sleep(1) # Delay in seconds
             GPIO.output(buzzer,GPIO.LOW)
