@@ -1,0 +1,24 @@
+= CheckWeight
+
+== Einleitung
+
+Checkweight ist ein IoT Projekt welches das Gewicht meldet und mittels MQTT warnt, ob eine vom User definierte Gewichtsgrenze überschritten wird
+
+== Vorbereitung
+
+Was du benötigst:
+
+* Raspberry Pi (empfohlen 4) mit Netzteil und einer Speicherkarte (mind. 8 GB empfohlen)
+
+image::images/raspberry pi os[]
+
+image::images/Skizze_Steckplatine.png[]
+
+== Checkweight Software
+
+....
+git clone https://github.com/clatsch/checkweight
+....
+
+
+
