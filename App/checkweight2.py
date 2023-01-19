@@ -113,6 +113,7 @@ try:
 
     publish_message(mqtt_client, 'Put known weight on the scale and then press Enter')
     known_weight_grams = None
+    print("known weight!")
     # input('Put known weight on the scale and then press Enter')
     while known_weight_grams is None:
         time.sleep(0.1)
@@ -127,6 +128,7 @@ try:
 
         # print('Enter maxWeight')
         publish_message(mqtt_client, 'Enter max weight')
+        print('Enter max weight')
         while maxWeight is None:
             time.sleep(0.1)
 
