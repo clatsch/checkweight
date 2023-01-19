@@ -108,21 +108,22 @@ try:
     else:
         print('invalid data', reading)
 
+    mqtt_client.loop_start()
+    subscribe(mqtt_client)
+
     publish_message(mqtt_client, 'Put known weight on the scale and then press Enter')
+    known_weight_grams = None
     # input('Put known weight on the scale and then press Enter')
+    while known_weight_grams is None:
+        time.sleep(0.1)
     reading = hx.get_data_mean()
+
     if reading:
         print('Mean value from HX711 subtracted by offset:', reading)
-        known_weight_grams = None
+
         maxWeight = None
 
-
-        mqtt_client.loop_start()
-        subscribe(mqtt_client)
-
         # Wait for known_weight_grams to be set before continuing
-        while known_weight_grams is None:
-            time.sleep(0.1)
 
         # print('Enter maxWeight')
         publish_message(mqtt_client, 'Enter max weight')
