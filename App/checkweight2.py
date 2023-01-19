@@ -159,7 +159,8 @@ try:
         weight = hx.get_weight_mean(20)
         weightRounded = round(weight/10)*10
         if weightRounded < 0:
-            weightRounded =0
+            weightRounded = 0
+            print(weightRounded)
         else:
             print(weightRounded)
         if weightRounded > maxWeight:
