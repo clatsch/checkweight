@@ -39,20 +39,20 @@ def publish_weight(client, weight):
     """
     if client:
         data = json.dumps({"weight": weight})
-        result = client.publish(MQTT_TOPIC, data)
-        result: [0, 1]
-        status = result[0]
-        if status == 0:
-            print(f"Sent weight {weight} to topic {MQTT_TOPIC}")
-        else:
-            print(f"Failed to send message to topic {MQTT_TOPIC}")
+        client.publish_weight(MQTT_TOPIC, data)
+        # result: [0, 1]
+        # status = result[0]
+        # if status == 0:
+        #     print(f"Sent weight {weight} to topic {MQTT_TOPIC}")
+        # else:
+        #     print(f"Failed to send message to topic {MQTT_TOPIC}")
     else:
         print("MQTT client not connected. Could not publish weight")
 
 def publish_message(client, msg):
     if client:
         data = json.dumps(msg)
-        client.publish(MQTT_TOPIC, data)
+        client.publish_message(MQTT_TOPIC, data)
         # result: [0, 1]
         # status = result[0]
         # if status == 0:
