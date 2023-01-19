@@ -135,13 +135,14 @@ try:
         try:
             value = float(known_weight_grams)
             print(value, 'grams')
-            mqtt_client.loop_stop()
+
         except ValueError:
             print('Expected integer or float and I have got:', known_weight_grams)
 
         ratio = reading / value
         hx.set_scale_ratio(ratio)
         print('Ratio is set.')
+        mqtt_client.loop_stop()
         publish_message(mqtt_client, 'Ratio is set.')
 
     else:
