@@ -152,7 +152,8 @@ try:
         # subscribe(mqtt_client)
         mqtt_client.loop_start()
         weight = hx.get_weight_mean(20)
-        print(weight)
+        weightRounded = round(weight/10)*10
+        print(weightRounded)
         if weight > maxWeight:
             publish_weight(mqtt_client, weight)
         # else:
