@@ -21,8 +21,10 @@ def connect_mqtt():
     """
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
-            print("Connected to MQTT Broker!")
+            publish_message(mqtt_client, 'Connected to MQTT Broker!')
+            # print("Connected to MQTT Broker!")
         else:
+            publish_message(mqtt_client, 'Failed to connect!')
             print(f"Failed to connect, return code {rc}")
 
     client = mqtt_client.Client(client_id)
@@ -30,16 +32,14 @@ def connect_mqtt():
     try:
         client.connect(MQTT_BROKER, MQTT_PORT)
     except:
+        publish_message(mqtt_client, 'Failed to connect to MQTT broker!')
         print("Failed to connect to MQTT broker")
         return None
     return client
 
 def publish_weight(client, weight):
-    """
-    Publish the weight to the MQTT topic
-    """
     if client:
-        data = json.dumps({"weight": weight})
+        data = json.dumps({"ATTENTION, you exceeded the maximum weight! Current weight": weight})
         client.publish(MQTT_TOPIC, data)
         # result: [0, 1]
         # status = result[0]
@@ -95,6 +95,7 @@ try:
     GPIO.setup(buzzer,GPIO.OUT)
     # tare the scale
     if not hx.zero():
+
         print("Tare successful")
     else:
         print("Tare failed")
@@ -106,6 +107,7 @@ try:
     reading = hx.get_raw_data_mean()
     if reading:  # always check if you get correct value or only False
         # now the value is close to 0
+
         print('Data subtracted by offset but still not converted to units:',
               reading)
     else:
@@ -114,24 +116,23 @@ try:
     mqtt_client.loop_start()
     subscribe(mqtt_client)
 
-    publish_message(mqtt_client, 'Put known weight on the scale and then press Enter')
+    publish_message(mqtt_client, 'Put known weight on the scale and enter the weight in grams. Finally submit it with SET KNOWN WEIGHT. Do not remove the object until told so.')
     known_weight_grams = None
-    print("known weight!")
     # input('Put known weight on the scale and then press Enter')
     while known_weight_grams is None:
         time.sleep(0.1)
     reading = hx.get_data_mean()
 
     if reading:
-        print('Mean value from HX711 subtracted by offset:', reading)
+        # print('Mean value from HX711 subtracted by offset:', reading)
 
         maxWeight = None
 
         # Wait for known_weight_grams to be set before continuing
 
         # print('Enter maxWeight')
-        publish_message(mqtt_client, 'Enter max weight')
-        print('Enter max weight')
+        publish_message(mqtt_client, 'Enter the maximum weight in grams and submit it with SET MAX WEIGHT.')
+        # print('Enter max weight')
         while maxWeight is None:
             time.sleep(0.1)
 
@@ -147,7 +148,7 @@ try:
         hx.set_scale_ratio(ratio)
         print('Ratio is set.')
         mqtt_client.loop_stop()
-        publish_message(mqtt_client, 'Ratio is set.')
+        publish_message(mqtt_client, 'Ratio is set. You can remove the known weight.')
 
     else:
         raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
