@@ -157,7 +157,7 @@ try:
         if weightRounded > maxWeight:
             print(weightRounded)
             GPIO.output(buzzer,GPIO.HIGH)
-            sleep(0.5) # Delay in seconds
+            sleep(0.4) # Delay in seconds
             GPIO.output(buzzer,GPIO.LOW)
             publish_weight(mqtt_client, weightRounded)
         # else:
