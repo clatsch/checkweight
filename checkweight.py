@@ -93,7 +93,6 @@ try:
     hx = HX711(dout_pin=6, pd_sck_pin=5)
     buzzer = 23
     GPIO.setup(buzzer,GPIO.OUT)
-    publish_message(mqtt_client, 'Application started')
     # tare the scale
     if not hx.zero():
         publish_message(mqtt_client, 'Tare successful')
