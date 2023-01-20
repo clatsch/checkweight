@@ -12,9 +12,6 @@ MQTT_BROKER = os.environ.get("MQTT_BROKER", 'localhost')
 MQTT_PORT = int(os.environ.get("MQTT_PORT", 1883))
 MQTT_TOPIC = os.environ.get("MQTT_TOPIC", "checkweight")
 
-global knownWeight
-global maxWeight
-
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 
@@ -61,10 +58,12 @@ def subscribe(client: mqtt_client):
         # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
         if 'knownWeight' in payload:
+            global knownWeight
             knownWeight = payload['knownWeight']
             print("Known weight set to:", knownWeight)
 
         if 'maxWeight' in payload:
+            global maxWeight
             maxWeight = payload['maxWeight']
             maxWeight = float(maxWeight)
             print("Maximum weight set to:", maxWeight)
@@ -90,9 +89,7 @@ try:
         print("Tare failed")
     # get the weight
     mqtt_client = connect_mqtt()
-    time.sleep(2)
 
-    # -----------------------------
 
     reading = hx.get_raw_data_mean()
     if reading:  # always check if you get correct value or only False
@@ -111,7 +108,6 @@ try:
     # input('Put known weight on the scale and then press Enter')
     while knownWeight is None:
         time.sleep(0.1)
-
     reading = hx.get_data_mean()
 
     if reading:
