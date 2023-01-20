@@ -11,6 +11,7 @@ from paho.mqtt import client as mqtt_client
 MQTT_BROKER = os.environ.get("MQTT_BROKER", 'localhost')
 MQTT_PORT = int(os.environ.get("MQTT_PORT", 1883))
 MQTT_TOPIC = os.environ.get("MQTT_TOPIC", "checkweight")
+MQTT_TOPIC_SETTERS = os.environ.get("MQTT_TOPIC", "checkweight/setters")
 
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
@@ -53,7 +54,7 @@ def publish_message(client, msg):
 
 
 def subscribe(client: mqtt_client):
-    client.subscribe(MQTT_TOPIC)
+    client.subscribe(MQTT_TOPIC_SETTERS)
     def on_message(client, userdata, msg):
         # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
