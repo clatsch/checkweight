@@ -39,7 +39,7 @@ def connect_mqtt():
 
 def publish_weight(client, weight):
     if client:
-        data = json.dumps(repr("ATTENTION, you exceeded the maximum weight! Current weight: ") + weight)
+        data = json.dumps({"ATTENTION, you exceeded the maximum weight! Current weight": weight})
         client.publish(MQTT_TOPIC, data)
     else:
         print("MQTT client not connected. Could not publish weight")
