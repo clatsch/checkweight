@@ -159,7 +159,7 @@ try:
             GPIO.output(buzzer,GPIO.HIGH)
             sleep(0.5) # Delay in seconds
             GPIO.output(buzzer,GPIO.LOW)
-            publish_weight(mqtt_client, weight)
+            publish_weight(mqtt_client, weightRounded)
         # else:
         #     print("Invalid weight")
 
