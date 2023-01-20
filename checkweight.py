@@ -62,12 +62,12 @@ def subscribe(client: mqtt_client):
         payload = json.loads(msg.payload.decode())
         if 'knownWeight' in payload:
             knownWeight = payload['knownWeight']
-            print("Known weight set to: ", knownWeight)
+            print("Known weight set to:", knownWeight)
 
         if 'maxWeight' in payload:
             maxWeight = payload['maxWeight']
             maxWeight = float(maxWeight)
-            print("Maximum weight set to: ", maxWeight)
+            print("Maximum weight set to:", maxWeight)
 
         elif 'weight' in payload:
             global weight
@@ -111,6 +111,7 @@ try:
     # input('Put known weight on the scale and then press Enter')
     while knownWeight is None:
         time.sleep(0.1)
+
     reading = hx.get_data_mean()
 
     if reading:
