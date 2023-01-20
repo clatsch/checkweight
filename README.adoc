@@ -1,0 +1,17 @@
+# CheckWeight
+CheckWeight is a project that aims to create a weight sensor with a built-in alarm that alerts the user when the weight exceeds a certain threshold.
+
+## Hardware requirements
+* https://www.pi-shop.ch/raspberry-pi-4-starter-kit-pi-4-4gb[Raspberry Pi (version 4 recommended) with Raspberry Pi OS installed, power supply, and a memory card (at least 8 GB)]
+- Load Cell Amplifier - HX711 weight sensor 24 bit
+- 50kg Load Cell weight sensor
+- Piezo Buzzer active buzzer
+- Breadboard (recommended)
+- Several jumper cables
+- 1k Ohm resistor (2 pieces)
+
+
+## Software requirements
+- Python
+- Node-RED
+- MQTT library
