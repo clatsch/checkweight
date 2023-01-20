@@ -89,6 +89,7 @@ def subscribe(client: mqtt_client):
 
 try:
     # set up GPIO
+    print("started...")
     GPIO.setmode(GPIO.BCM)
     hx = HX711(dout_pin=6, pd_sck_pin=5)
     buzzer = 23
