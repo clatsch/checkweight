@@ -39,7 +39,7 @@ def connect_mqtt():
 
 def publish_weight(client, weight):
     if client:
-        data = json.dumps({"ATTENTION, you exceeded the maximum weight! Current weight": weight})
+        data = json.dumps({"ATTENTION, you exceeded the maximum weight! Current weight ": weight})
         client.publish(MQTT_TOPIC, data)
     else:
         print("MQTT client not connected. Could not publish weight")
@@ -60,13 +60,13 @@ def subscribe(client: mqtt_client):
         if 'knownWeight' in payload:
             global knownWeight
             knownWeight = payload['knownWeight']
-            print("knownWeight", knownWeight)
+            print("Known weight set to: ", knownWeight)
 
         if 'maxWeight' in payload:
             global maxWeight
             maxWeight = payload['maxWeight']
             maxWeight = float(maxWeight)
-            print("maxWeight", maxWeight)
+            print("Maximum weight set to: ", maxWeight)
 
         elif 'weight' in payload:
             global weight
@@ -77,7 +77,7 @@ def subscribe(client: mqtt_client):
 
 try:
     # set up GPIO
-    print("started...")
+    print("starting...")
     GPIO.setmode(GPIO.BCM)
     hx = HX711(dout_pin=6, pd_sck_pin=5)
     buzzer = 23
@@ -131,7 +131,7 @@ try:
             print(value, 'grams')
 
         except ValueError:
-            print('Expected integer or float and I have got:', knownWeight)
+            print('Expected integer or float and I have got: ', knownWeight)
 
         ratio = reading / value
         hx.set_scale_ratio(ratio)
@@ -140,7 +140,7 @@ try:
         publish_message(mqtt_client, 'Ratio is set. You can remove the known weight.')
 
     else:
-        raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
+        raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading: ', reading)
 
 
     while True:
@@ -166,6 +166,7 @@ try:
 
 except (KeyboardInterrupt, SystemExit):
     print("Cleaning up")
+    publish_message(mqtt_client, 'Bye...')
     knownWeight = None
     maxWeight = None
     mqtt_client.loop_stop()
