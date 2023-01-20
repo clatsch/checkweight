@@ -70,9 +70,9 @@ def subscribe(client: mqtt_client):
         # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
         if 'knownWeight' in payload:
-            global known_weight_grams
-            known_weight_grams = payload['knownWeight']
-            print("knownWeight", known_weight_grams)
+            global knownWeight
+            knownWeight = payload['knownWeight']
+            print("knownWeight", knownWeight)
 
         if 'maxWeight' in payload:
             global maxWeight
@@ -88,6 +88,7 @@ def subscribe(client: mqtt_client):
 
 
 try:
+    publish_message(mqtt_client, 'Application started')
     # set up GPIO
     GPIO.setmode(GPIO.BCM)
     hx = HX711(dout_pin=6, pd_sck_pin=5)
@@ -95,8 +96,8 @@ try:
     GPIO.setup(buzzer,GPIO.OUT)
     # tare the scale
     if not hx.zero():
-
-        print("Tare successful")
+        publish_message(mqtt_client, 'Tare successful')
+        # print("Tare successful")
     else:
         print("Tare failed")
     # get the weight
@@ -106,10 +107,10 @@ try:
 
     reading = hx.get_raw_data_mean()
     if reading:  # always check if you get correct value or only False
-        # now the value is close to 0
-
-        print('Data subtracted by offset but still not converted to units:',
-              reading)
+            # now the value is close to 0
+        publish_message(mqtt_client, 'Data subtracted by offset but still not converted to units yet.')
+        # print('Data subtracted by offset but still not converted to units:',
+        #       reading)
     else:
         print('invalid data', reading)
 
@@ -117,9 +118,9 @@ try:
     subscribe(mqtt_client)
 
     publish_message(mqtt_client, 'Put known weight on the scale and enter the weight in grams. Finally submit it with SET KNOWN WEIGHT. Do not remove the object until told so.')
-    known_weight_grams = None
+    knownWeight = None
     # input('Put known weight on the scale and then press Enter')
-    while known_weight_grams is None:
+    while knownWeight is None:
         time.sleep(0.1)
     reading = hx.get_data_mean()
 
@@ -137,12 +138,12 @@ try:
             time.sleep(0.1)
 
         try:
-            value = float(known_weight_grams)
+            value = float(knownWeight)
             maxWeight = int(maxWeight)
             print(value, 'grams')
 
         except ValueError:
-            print('Expected integer or float and I have got:', known_weight_grams)
+            print('Expected integer or float and I have got:', knownWeight)
 
         ratio = reading / value
         hx.set_scale_ratio(ratio)
@@ -177,7 +178,7 @@ try:
 
 except (KeyboardInterrupt, SystemExit):
     print("Cleaning up")
-    known_weight_grams = None
+    knownWeight = None
     maxWeight = None
     mqtt_client.loop_stop()
     hx.power_down()
