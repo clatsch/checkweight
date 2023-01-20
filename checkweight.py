@@ -12,6 +12,9 @@ MQTT_BROKER = os.environ.get("MQTT_BROKER", 'localhost')
 MQTT_PORT = int(os.environ.get("MQTT_PORT", 1883))
 MQTT_TOPIC = os.environ.get("MQTT_TOPIC", "checkweight")
 
+global knownWeight
+global maxWeight
+
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 
@@ -58,12 +61,10 @@ def subscribe(client: mqtt_client):
         # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
         if 'knownWeight' in payload:
-            global knownWeight
             knownWeight = payload['knownWeight']
             print("Known weight set to: ", knownWeight)
 
         if 'maxWeight' in payload:
-            global maxWeight
             maxWeight = payload['maxWeight']
             maxWeight = float(maxWeight)
             print("Maximum weight set to: ", maxWeight)
