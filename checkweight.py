@@ -95,8 +95,7 @@ try:
     GPIO.setup(buzzer,GPIO.OUT)
     # tare the scale
     if not hx.zero():
-        publish_message(mqtt_client, 'Tare successful')
-        # print("Tare successful")
+        print("Tare successful")
     else:
         print("Tare failed")
     # get the weight
