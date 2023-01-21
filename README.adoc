@@ -3,12 +3,12 @@ CheckWeight is a project that aims to create a weight sensor with a built-in ala
 
 ## Hardware requirements
 * https://www.pi-shop.ch/raspberry-pi-4-starter-kit-pi-4-4gb[Raspberry Pi (version 4 recommended) with Raspberry Pi OS installed, power supply, and a memory card (at least 8 GB)]
-- Load Cell Amplifier - HX711 weight sensor 24 bit
-- 50kg Load Cell weight sensor
-- Piezo Buzzer active buzzer
-- Breadboard (recommended)
-- Several jumper cables
-- 1k Ohm resistor (2 pieces)
+* https://www.bastelgarage.ch/load-cell-amplifier-hx711-wiegesensor-24-bit?search=420533[Load Cell Amplifier - HX711 weight sensor 24 bit]
+* https://www.bastelgarage.ch/50kg-load-cell-gewichtssensor?search=420622[50kg Load Cell weight sensor]
+* https://www.bastelgarage.ch/piezo-buzzer-summer-aktiv?search=420248[Piezo Buzzer active buzzer]
+* https://www.bastelgarage.ch/syb-170-mini-breadboard-170-pins-weiss?search=420365[Breadboard (recommended)]
+* https://www.bastelgarage.ch/jumperkabel-dupont-set-10cm-60-stk?search=jumper[Several jumper cables]
+* 1k Ohm resistor (2 pieces)
 
 
 ## Software requirements
