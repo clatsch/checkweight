@@ -54,7 +54,6 @@ def publish_message(client, msg):
 
 def subscribe(client: mqtt_client):
     client.subscribe(MQTT_TOPIC)
-    print('subscribed')
     def on_message(client, userdata, msg):
         # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
@@ -103,7 +102,6 @@ try:
         print('invalid data', reading)
 
     subscribe(mqtt_client)
-    # mqtt_client.loop_start()
 
     publish_message(mqtt_client, 'Put known weight on the scale and enter the weight in grams. Finally submit it with SET KNOWN WEIGHT. Do not remove the object until told so.')
     knownWeight = None
@@ -144,8 +142,6 @@ try:
 
 
     while True:
-        # subscribe(mqtt_client)
-        # mqtt_client.loop_start()
         weight = hx.get_weight_mean(20)
         weightRounded = round(weight/10)*10
         if weightRounded < 0:
@@ -160,8 +156,7 @@ try:
             sleep(0.4) # Delay in seconds
             GPIO.output(buzzer,GPIO.LOW)
             publish_weight(mqtt_client, weightRounded)
-        # else:
-        #     print("Invalid weight")
+
 
 
 except (KeyboardInterrupt, SystemExit):
