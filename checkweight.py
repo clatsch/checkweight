@@ -22,7 +22,7 @@ def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             # publish_message(mqtt_client, 'Connected to MQTT Broker!')
-            print("Connected")
+            print("connected")
         else:
             publish_message(mqtt_client, 'Failed to connect!')
             print(f"Failed to connect, return code {rc}")
