@@ -74,6 +74,7 @@ def subscribe(client: mqtt_client):
 
 
     client.on_message = on_message
+    client.loop_start()
 
 
 try:
@@ -101,8 +102,8 @@ try:
     else:
         print('invalid data', reading)
 
-    mqtt_client.loop_start()
     subscribe(mqtt_client)
+    # mqtt_client.loop_start()
 
     publish_message(mqtt_client, 'Put known weight on the scale and enter the weight in grams. Finally submit it with SET KNOWN WEIGHT. Do not remove the object until told so.')
     knownWeight = None
@@ -144,7 +145,7 @@ try:
 
     while True:
         # subscribe(mqtt_client)
-        mqtt_client.loop_start()
+        # mqtt_client.loop_start()
         weight = hx.get_weight_mean(20)
         weightRounded = round(weight/10)*10
         if weightRounded < 0:
