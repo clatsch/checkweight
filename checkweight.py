@@ -54,6 +54,7 @@ def publish_message(client, msg):
 
 def subscribe(client: mqtt_client):
     client.subscribe(MQTT_TOPIC)
+    print('subscribed')
     def on_message(client, userdata, msg):
         # print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         payload = json.loads(msg.payload.decode())
@@ -89,7 +90,6 @@ try:
         print("Tare failed")
     # get the weight
     mqtt_client = connect_mqtt()
-    subscribe(mqtt_client)
 
 
     reading = hx.get_raw_data_mean()
@@ -102,7 +102,7 @@ try:
         print('invalid data', reading)
 
     mqtt_client.loop_start()
-
+    subscribe(mqtt_client)
 
     publish_message(mqtt_client, 'Put known weight on the scale and enter the weight in grams. Finally submit it with SET KNOWN WEIGHT. Do not remove the object until told so.')
     knownWeight = None
